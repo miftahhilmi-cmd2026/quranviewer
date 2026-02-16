@@ -1,0 +1,54 @@
+# =========================
+# PYTHON
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Pip / build
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# =========================
+# FLASK
+# =========================
+instance/
+.webassets-cache/
+
+# dotenv (kalau nanti pakai)
+.env
+.env.*
+
+# =========================
+# PYINSTALLER (kalau masih build exe)
+# =========================
+*.spec
+*.exe
+*.manifest
+*.log
+
+# Folder build hasil pyinstaller
+build/
+dist/
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo

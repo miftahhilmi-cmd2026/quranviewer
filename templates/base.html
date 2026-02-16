@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ title if title else "Qurana Web" }}</title>
+
+  <!-- Font arab (opsional). Kalau offline, hapus link ini. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background:#f6f7fb; }
+    .wrap { max-width: 980px; margin: 24px auto; padding: 0 14px; }
+    .card { background:#fff; border:1px solid #e7e7ee; border-radius:14px; box-shadow: 0 6px 22px rgba(0,0,0,.05); }
+    .topbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; padding:14px; border-bottom:1px solid #eee; }
+    .topbar input { width:120px; padding:10px 12px; border:1px solid #ddd; border-radius:10px; }
+    .btn { padding:10px 12px; border:1px solid #ddd; border-radius:10px; background:#fff; cursor:pointer; text-decoration:none; color:#111; display:inline-block; }
+    .btn:hover { background:#f2f2f6; }
+    .sep { width:1px; height:34px; background:#e6e6ef; margin:0 4px; }
+    .title { padding: 14px 14px 0 14px; font-size: 22px; font-weight: 700; }
+    .status { padding: 10px 14px 14px 14px; color:#555; font-size: 14px; }
+    .viewer { padding:14px; }
+    .ayahbox {
+      background:#fff; border:1px solid #eee; border-radius:14px;
+      padding:16px; min-height: 360px;
+      font-family: "Scheherazade New", "Amiri", serif;
+      font-size: 28px; line-height: 1.8;
+      direction: rtl; text-align: right;
+      white-space: pre-wrap;
+    }
+    .error { padding: 10px 14px; color:#b00020; font-weight:600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>

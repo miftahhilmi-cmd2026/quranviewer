@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% set title = "Qurana Web" %}
+
+{% block content %}
+  <div class="card">
+    <div class="topbar">
+      <form method="post" action="{{ url_for('go') }}" style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <label>Nomor Surah (1–114):</label>
+        <input name="surah_id" inputmode="numeric" placeholder="mis. 1"
+               value="{{ surah.surah_id if surah else '' }}" />
+        <button class="btn" type="submit">Tampilkan</button>
+
+        <div class="sep"></div>
+
+        {% if surah and surah.prev_id %}
+          <a class="btn" href="{{ url_for('show_surah', surah_id=surah.prev_id) }}">⟵ Prev</a>
+        {% else %}
+          <span class="btn" style="opacity:.4; pointer-events:none;">⟵ Prev</span>
+        {% endif %}
+
+        {% if surah and surah.next_id %}
+          <a class="btn" href="{{ url_for('show_surah', surah_id=surah.next_id) }}">Next ⟶</a>
+        {% else %}
+          <span class="btn" style="opacity:.4; pointer-events:none;">Next ⟶</span>
+        {% endif %}
+
+        <div class="sep"></div>
+
+        <button class="btn" type="button" onclick="copyAll()">Copy (semua)</button>
+
+        {% if surah %}
+          <a class="btn" href="{{ url_for('export_txt', surah_id=surah.surah_id) }}">Export .txt</a>
+        {% else %}
+          <span class="btn" style="opacity:.4; pointer-events:none;">Export .txt</span>
+        {% endif %}
+      </form>
+    </div>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <div class="title">
+      {% if surah %}
+        Surah {{ surah.name }} ({{ surah.surah_id }}) — {{ surah.count }} ayat
+      {% else %}
+        (belum ada surah)
+      {% endif %}
+    </div>
+
+    <div class="viewer">
+      <div id="ayahbox" class="ayahbox">
+{% if surah %}
+{% for a in surah.ayahs %}{{ a.text }} ۝{{ a.no_ar }}
+{% endfor %}
+{% else %}
+Silakan masukkan nomor surah lalu klik Tampilkan.
+{% endif %}
+      </div>
+    </div>
+
+    <div class="status" id="status">
+      {% if surah %}Menampilkan Surah {{ surah.surah_id }}{% else %}Data siap (jika JSON ditemukan).{% endif %}
+    </div>
+  </div>
+
+  <script>
+    async function copyAll() {
+      const el = document.getElementById("ayahbox");
+      const text = (el.innerText || "").trim();
+      if (!text) {
+        document.getElementById("status").innerText = "Belum ada teks untuk dicopy.";
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        document.getElementById("status").innerText = "Teks berhasil dicopy ke clipboard.";
+      } catch (e) {
+        // fallback lama
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        document.getElementById("status").innerText = "Teks berhasil dicopy ke clipboard.";
+      }
+    }
+  </script>
+{% endblock %}
